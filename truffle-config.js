@@ -6,12 +6,33 @@ module.exports = {
   contracts_build_directory: path.join(__dirname, "client/src/contracts"),
   networks: {
     develop: {
-      port: 8545
+      host: "localhost",
+      port: 8545,
+      network_id: "*"
     }
   },
   compilers: {
     solc: {
-      version: "^0.6.0"
+      version: "^0.6.0",
+      docker: false,
+      settings: {
+        "remappings": [],
+        "optimizer": {
+          "enabled": true,
+          "runs": 200
+        },
+        "evmVersion": "istanbul",
+        "libraries": {},
+        "outputSelection": {
+          "*": {
+            "*": [
+              "evm.bytecode",
+              "evm.deployedBytecode",
+              "abi"
+            ]
+          }
+        }
+      }
     }
   }
 };
