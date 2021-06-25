@@ -2,8 +2,8 @@
 pragma solidity ^0.6.0;
 pragma experimental ABIEncoderV2;
 
-import "./SafeMath.sol";
-import "./Ownable.sol";
+import "../SafeMath.sol";
+import "../Ownable.sol";
 
 contract SingDao is Ownable {
     /// @notice EIP-20 token name for this token

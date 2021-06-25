@@ -1,37 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./css/App.css";
 import { Contract } from "web3-eth-contract";
 import NumberFormat from "react-number-format";
 import SingDaoContract from "./contracts/SingDao.json";
+import SingularityNetTokenContract from "./contracts/SingularityNetToken.json";
 import useWeb3 from "./hooks/web3";
 
 const App: React.VFC = () => {
   const { isLoading, isWeb3, web3, accounts } = useWeb3();
-  const [instance, setInstance] = useState<Contract>();
-  const [value, setValue] = useState(0);
+  const [agixInstance, setAgixInstance] = useState<Contract>();
+  const [sdaoInstance, setSdaoInstance] = useState<Contract>();
+  const [agixBalance, setAgixBalance] = useState(0);
+  const [sdaoBalance, setSdaoBalance] = useState(0);
+  const [agixDecimals, setAgixDecimals] = useState(0);
+  const [sdaoDecimals, setSdaoDecimals] = useState(0);
 
-  const abi = SingDaoContract.abi;
+  const getBalances = useCallback(async () => {
+    // --- SDAO ---
 
-  const getBalance = async () => {
     // Get the value from the contract to prove it worked.
-    const response = await instance?.methods.balanceOf(accounts[0]).call();
+    const sdaoBalanceResponse = await sdaoInstance?.methods
+      .balanceOf(accounts[0])
+      .call();
+    const sdaoDecimalsResponse = await sdaoInstance?.methods.decimals().call();
 
     // Update state with the result.
-    console.log(response, instance);
-    setValue(response || 0);
-  };
+    setSdaoBalance(sdaoBalanceResponse || 0);
+    setSdaoDecimals(sdaoDecimalsResponse ? Number(sdaoDecimalsResponse) : 0);
 
-  console.log(value, web3?.utils);
+    // --- AGIX ---
 
-  const displayedBalance = (
+    // Get the value from the contract to prove it worked.
+    const agixBalanceResponse = await agixInstance?.methods
+      .balanceOf(accounts[0])
+      .call();
+    const agixDecimalsResponse = await agixInstance?.methods.decimals().call();
+
+    // Update state with the result.
+    setAgixBalance(agixBalanceResponse || 0);
+    setAgixDecimals(agixDecimalsResponse || 0);
+  }, [accounts, agixInstance?.methods, sdaoInstance?.methods]);
+
+  const getDisplayedBalance = (
+    amount: number,
+    symbol: string,
+    decimals: number
+  ) => (
     <span>
       <NumberFormat
         thousandSeparator=","
         decimalSeparator="."
         displayType="text"
-        value={value / Math.pow(10, 18)}
+        value={amount / Math.pow(10, decimals)}
       />{" "}
-      SDAO
+      {symbol}
     </span>
   );
 
@@ -39,23 +61,35 @@ const App: React.VFC = () => {
     (async () => {
       if (web3 !== null) {
         const networkId = await web3.eth.net.getId();
-        const deployedNetwork = (
+
+        const sdaoAbi: any = SingDaoContract.abi;
+        const agixAbi: any = SingularityNetTokenContract.abi;
+        const sdaoDeployedNetwork = (
           SingDaoContract.networks as { [id: number]: any }
         )[networkId];
-        const instance = new web3.eth.Contract(
-          abi as any,
-          deployedNetwork && deployedNetwork.address
+        const agixDeployedNetwork = (
+          SingularityNetTokenContract.networks as { [id: number]: any }
+        )[networkId];
+        const sdaoInstance = new web3.eth.Contract(
+          sdaoAbi,
+          sdaoDeployedNetwork && sdaoDeployedNetwork.address
         );
-        setInstance(instance);
+        setSdaoInstance(sdaoInstance);
+        const agixInstance = new web3.eth.Contract(
+          agixAbi,
+          agixDeployedNetwork && agixDeployedNetwork.address
+        );
+        setAgixInstance(agixInstance);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoading, isWeb3]);
 
   useEffect(() => {
-    if (instance) {
-      getBalance();
+    if (sdaoInstance && agixInstance) {
+      getBalances();
     }
-  }, [instance]);
+  }, [sdaoInstance, agixInstance, getBalances]);
 
   return (
     <div className="App">
@@ -66,7 +100,12 @@ const App: React.VFC = () => {
           <h1>Airdrop Portal</h1>
           <div>Eth Address: {accounts[0]}</div>
           <div>
-            Your SDAO balance is: <b>{displayedBalance}</b>
+            Your AGIX balance is:{" "}
+            <b>{getDisplayedBalance(agixBalance, "AGIX", agixDecimals)}</b>
+          </div>
+          <div>
+            Your SDAO balance is:{" "}
+            <b>{getDisplayedBalance(sdaoBalance, "SDAO", sdaoDecimals)}</b>
           </div>
         </>
       ) : (

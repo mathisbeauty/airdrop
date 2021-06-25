@@ -1,16 +1,16 @@
 {
   "contractName": "Context",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Users/Tomas/Desktop/SingularityDAO/repos/airdrop/contracts/SingDao/Context.sol\":\"Context\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/Tomas/Desktop/SingularityDAO/repos/airdrop/contracts/SingDao/Context.sol\":{\"keccak256\":\"0xa475c1685349498b21fd15bf23d66cc09480745186a5854b010784b620ffe4f3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7aa171a3b0aeabd7b31b94cf63eb14df9fd3d2e3a12d5ba3d9a634a789871196\",\"dweb:/ipfs/QmNwZDsCn4Af9Uyw3syohXAAoe9pAwCuvCm6FZXG3Hv5ka\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/C/Users/Tomas/Desktop/SingularityDAO/repos/airdrop/contracts/Context.sol\":\"Context\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"/C/Users/Tomas/Desktop/SingularityDAO/repos/airdrop/contracts/Context.sol\":{\"keccak256\":\"0xa475c1685349498b21fd15bf23d66cc09480745186a5854b010784b620ffe4f3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7aa171a3b0aeabd7b31b94cf63eb14df9fd3d2e3a12d5ba3d9a634a789871196\",\"dweb:/ipfs/QmNwZDsCn4Af9Uyw3syohXAAoe9pAwCuvCm6FZXG3Hv5ka\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\r\n\r\npragma solidity >=0.6.0 <0.8.0;\r\n\r\n/*\r\n * @dev Provides information about the current execution context, including the\r\n * sender of the transaction and its data. While these are generally available\r\n * via msg.sender and msg.data, they should not be accessed in such a direct\r\n * manner, since when dealing with GSN meta-transactions the account sending and\r\n * paying for execution may not be the actual sender (as far as an application\r\n * is concerned).\r\n *\r\n * This contract is only required for intermediate, library-like contracts.\r\n */\r\nabstract contract Context {\r\n    function _msgSender() internal view virtual returns (address payable) {\r\n        return msg.sender;\r\n    }\r\n\r\n    function _msgData() internal view virtual returns (bytes memory) {\r\n        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691\r\n        return msg.data;\r\n    }\r\n}",
-  "sourcePath": "C:/Users/Tomas/Desktop/SingularityDAO/repos/airdrop/contracts/SingDao/Context.sol",
+  "sourcePath": "C:\\Users\\Tomas\\Desktop\\SingularityDAO\\repos\\airdrop\\contracts\\Context.sol",
   "ast": {
-    "absolutePath": "/C/Users/Tomas/Desktop/SingularityDAO/repos/airdrop/contracts/SingDao/Context.sol",
+    "absolutePath": "/C/Users/Tomas/Desktop/SingularityDAO/repos/airdrop/contracts/Context.sol",
     "exportedSymbols": {
       "Context": [
         22
@@ -272,7 +272,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/C/Users/Tomas/Desktop/SingularityDAO/repos/airdrop/contracts/SingDao/Context.sol",
+      "absolutePath": "/C/Users/Tomas/Desktop/SingularityDAO/repos/airdrop/contracts/Context.sol",
       "exportedSymbols": {
         "Context": [
           22
@@ -586,7 +586,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.1",
-  "updatedAt": "2021-06-24T23:25:28.553Z",
+  "updatedAt": "2021-06-25T00:24:19.248Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
